@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Demo</title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.1.1/d3.min.js"></script>
+    <style>
+        .link {
+            stroke: #777;
+            stroke-opacity: 0.3;
+            stroke-width: 1.5px;
+        }
+
+        .node circle {
+            stroke: #000;
+            stroke-width: 1.5px;
+        }
+
+        .node text {
+            display: none;
+            font: 10px sans-serif;
+        }
+
+        .node:hover circle {
+            fill: #000;
+        }
+
+        .node:hover text {
+            display: inline;
+        }
+
+        .cell {
+            fill: none;
+            pointer-events: all;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Nhận dạng thực thể được đặt tên</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <div class="container pt-3">
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Nội dung cần nhận dạng</h5>
+                <form action="{{ url_for('analyzer')}}" method="post">
+                    <div class="form-group">
+                        <label for="content">Nội dung</label>
+                        <input type="text" class="form-control" name="content">
+                    </div>
+                    <div class="d-flex">
+                        <button type="submit" id="button_submit" class="btn btn-primary mr-2 flex-fill">Gắn thẻ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Kết quả</h5>
+                {% if content %}
+                <p>{{ content }}</p>
+                {% endif %}
+                {% if data %}
+                <label for="PER">Người</label>
+                <ul>
+                    {% for itemPER in data[0] %}
+                    <li>{{ itemPER }}</li>
+                    {% endfor %}
+                </ul>
+                <label for="LOC">Địa điểm</label>
+                <ul>
+                    {% for itemPER in data[1] %}
+                    <li>{{ itemPER }}</li>
+                    {% endfor %}
+                </ul>
+                <label for="ORG">Tổ chức</label>
+                <ul>
+                    {% for itemPER in data[2] %}
+                    <li>{{ itemPER }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
